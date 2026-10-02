@@ -1,0 +1,96 @@
+/* ============================================================================
+   theme.css — "Arbor" theme for the SiteTheme preview
+   ============================================================================
+   Two-tier token system (Ivy):
+     1. VARIANT tokens  --color-X-light / --color-X-dark  (SOURCE values)
+     2. APPLIED tokens  --color-bg, --color-text, ...      (remapped by theme)
+
+   CARDINAL RULE: override the -light / -dark VARIANT tokens on :root — NEVER
+   the applied tokens directly. The <dark-mode-toggle> component overwrites the
+   applied tokens when dark mode activates, so direct overrides would be
+   clobbered and would break dark mode.
+
+   This file is PLAIN UNLAYERED CSS loaded AFTER the libraries. Ivy's layers
+   are `@layer ivy-base, ivy-extra;` — unlayered CSS wins over layered CSS
+   without needing !important.
+
+   Load order in HTML:
+     1. ivy.full.min.css
+     2. lattice.full.min.css
+     3. theme.css  (this file)
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------------
+     LIGHT palette — arbor (forest green / olive / gold)
+     ---------------------------------------------------------------------- */
+  --color-primary-light:        #114232;
+  --color-primary-text-light:   #ffffff;
+  --color-secondary-light:      #87A922;
+  --color-secondary-text-light: #0e1a00;
+  --color-link-light:           #87A922;
+  --color-muted-light:          color-mix(in oklab, #114232 28%, #9ca3af);
+  --color-border-light:         color-mix(in oklab, #FCDC2A 30%, transparent);
+  --color-surface-light:        color-mix(in oklab, #F7F6BB 10%, #ffffff);
+  --surface-2-light:            color-mix(in oklab, #F7F6BB 22%, #ffffff);
+  --surface-3-light:            color-mix(in oklab, #FCDC2A 14%, #ffffff);
+
+  /* ------------------------------------------------------------------------
+     DARK palette — arbor (deep forest green / sage / gold)
+     ---------------------------------------------------------------------- */
+  --color-primary-dark:         #2F6B3F;
+  --color-primary-text-dark:    #FFF6C0;
+  --color-secondary-dark:       #7FB77E;
+  --color-secondary-text-dark:  #0e1a00;
+  --color-link-dark:            #F7C85C;
+  --color-muted-dark:           color-mix(in oklab, #7FB77E 38%, #a1aab8);
+  --color-border-dark:          color-mix(in oklab, #2F6B3F 30%, transparent);
+  --color-surface-dark:         color-mix(in oklab, #2F6B3F 13%, #111418);
+  --surface-2-dark:             color-mix(in oklab, #2F6B3F 20%, #18202a);
+  --surface-3-dark:             color-mix(in oklab, #7FB77E 14%, #202a36);
+
+  /* ------------------------------------------------------------------------
+     Semantic status colors (single value, used in both palettes)
+     ---------------------------------------------------------------------- */
+  --info:    #60a5fa;
+  --success: #22c55e;
+  --warn:    #f59e0b;
+  --danger:  #ef4444;
+}
+
+/* ============================================================================
+   site.css — site-specific rules (sticky header, anchor offset, fluid type)
+   ========================================================================== */
+
+/* Sticky translucent header with a blur backdrop */
+header[role="banner"] {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in oklab, var(--color-bg) 92%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+/* Anchored sections clear the sticky header */
+[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+/* Hero / landing fluid type */
+.hero h1 {
+  font-size: clamp(2.75rem, 7vw, 4.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+}
+.hero .lede {
+  font-size: 1.2rem;
+  color: var(--color-muted);
+  max-width: 42rem;
+}
+
+/* Page-title (docs/examples) fluid type */
+.page-title h1 {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}

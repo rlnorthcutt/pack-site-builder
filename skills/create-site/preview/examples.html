@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Examples — SiteTheme Docs</title>
+  <meta name="description" content="Examples and demos for SiteTheme: cards, callouts, grids, and dark-mode theming.">
+
+  <!--
+    PREPAINT SCRIPT — MUST come BEFORE the CSS links.
+    Reads the persisted theme (localStorage key "dm:theme") and sets
+    data-theme="dark" on <html> before any paint, preventing a flash of the
+    wrong theme on load. Do not move this below the <link> tags.
+  -->
+  <script>
+  (() => {
+    const KEY = 'dm:theme';
+    const root = document.documentElement;
+    const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+    let mode;
+    try { mode = localStorage.getItem(KEY); } catch {}
+    if (!mode) mode = (root.getAttribute('data-theme')==='dark'||root.classList.contains('dark'))?'dark':null;
+    if (!mode) mode = prefersDark ? 'dark' : 'light';
+    root.style.colorScheme = mode;
+    if (mode === 'dark') root.setAttribute('data-theme','dark');
+  })();
+  </script>
+
+  <!-- Ivy (classless baseline) — load first (vendored local copy) -->
+  <link rel="stylesheet" href="ivy.full.min.css">
+  <!-- Lattice (12-col layout utilities) — load second (vendored local copy) -->
+  <link rel="stylesheet" href="lattice.full.min.css">
+  <!-- Your theme — unlayered, loaded last so it wins over the libraries -->
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body class="lattice">
+
+  <!-- SKIP LINK — first element in body -->
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <!-- STICKY HEADER — role="banner". Same header on every page. -->
+  <header role="banner">
+    <div class="container d-flex items-center justify-between gap-3">
+      <a href="index.html" style="display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--color-text);font-weight:600;letter-spacing:-.01em">
+        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" style="color:var(--color-primary);flex:none">
+          <path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        <span>SiteTheme Docs</span>
+      </a>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="doc.html">Docs</a></li>
+          <li><a href="examples.html" aria-current="page">Examples</a></li>
+          <li><a href="https://github.com/rlnorthcutt/ivy" target="_blank" rel="noopener">GitHub</a></li>
+          <li><dark-mode-toggle></dark-mode-toggle></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN — id="content" is the skip-link target -->
+  <main id="content">
+
+    <!-- PAGE TITLE — kicker + h1 + lede -->
+    <section class="page-title container" aria-labelledby="page-title">
+      <p class="kicker">Showcase</p>
+      <h1 id="page-title">Examples</h1>
+      <p class="lede">A gallery of components and patterns you can drop into a themed site. Flip the dark-mode toggle to see the arbor palette in both palettes.</p>
+    </section>
+
+    <!-- EXAMPLES GRID — responsive 3-column grid of cards -->
+    <section class="container" aria-label="Examples list">
+      <div class="grid sm-col-3 gap-3">
+
+        <article class="card">
+          <header><h2>Card grid</h2></header>
+          <p>Responsive cards using Lattice's <code>sm-col-3</code> grid — this very layout.</p>
+          <footer><a href="#card-grid">View example &rarr;</a></footer>
+        </article>
+
+        <article class="card">
+          <header><h2>Callouts</h2></header>
+          <p>Semantic callouts with <code>data-tone="info|success|warn|danger"</code>.</p>
+          <footer><a href="#callouts">View example &rarr;</a></footer>
+        </article>
+
+        <article class="card">
+          <header><h2>Buttons</h2></header>
+          <p>Primary, secondary, outline, and ghost variants via <code>data-variant</code>.</p>
+          <footer><a href="#buttons">View example &rarr;</a></footer>
+        </article>
+
+        <article class="card">
+          <header><h2>Code blocks</h2></header>
+          <p>Syntax-friendly <code>&lt;pre&gt;&lt;code&gt;</code> blocks styled by the classless baseline.</p>
+          <footer><a href="#code">View example &rarr;</a></footer>
+        </article>
+
+        <article class="card">
+          <header><h2>Dark mode</h2></header>
+          <p>The <code>&lt;dark-mode-toggle&gt;</code> component with persistence and cross-tab sync.</p>
+          <footer><a href="#dark-mode">View example &rarr;</a></footer>
+        </article>
+
+        <article class="card">
+          <header><h2>Fluid type</h2></header>
+          <p>Hero and page-title headings scale with <code>clamp()</code> across viewports.</p>
+          <footer><a href="#fluid-type">View example &rarr;</a></footer>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER — site-wide footer -->
+  <footer class="container">
+    <p>&copy; <span id="year">2025</span> SiteTheme Docs. Built with <a href="https://github.com/rlnorthcutt/ivy" target="_blank" rel="noopener">Ivy</a> + <a href="https://github.com/rlnorthcutt/lattice" target="_blank" rel="noopener">Lattice</a>.</p>
+  </footer>
+
+  <!-- DARK-MODE-TOGGLE COMPONENT — vendored local copy (IIFE build), loaded as a plain deferred script -->
+  <script src="dark-mode-toggle.min.js" defer></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

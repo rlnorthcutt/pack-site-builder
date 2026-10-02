@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Examples — Site Name</title>
+  <meta name="description" content="Examples and demos for Site Name.">
+
+  <!--
+    PREPAINT SCRIPT — MUST come BEFORE the CSS links.
+    Reads the persisted theme (localStorage key "dm:theme") and sets
+    data-theme="dark" on <html> before any paint, preventing a flash of the
+    wrong theme on load. Do not move this below the <link> tags.
+  -->
+  <script>
+  (() => {
+    const KEY = 'dm:theme';
+    const root = document.documentElement;
+    const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+    let mode;
+    try { mode = localStorage.getItem(KEY); } catch {}
+    if (!mode) mode = (root.getAttribute('data-theme')==='dark'||root.classList.contains('dark'))?'dark':null;
+    if (!mode) mode = prefersDark ? 'dark' : 'light';
+    root.style.colorScheme = mode;
+    if (mode === 'dark') root.setAttribute('data-theme','dark');
+  })();
+  </script>
+
+  <!-- Ivy (classless baseline) — load first -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rlnorthcutt/ivy/dist/ivy.full.min.css">
+  <!-- Lattice (12-col layout utilities) — load second -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rlnorthcutt/lattice/dist/lattice.full.min.css">
+  <!-- Your theme — unlayered, loaded last so it wins over the libraries -->
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body class="lattice">
+
+  <!-- SKIP LINK — first element in body -->
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <!-- STICKY HEADER — role="banner". Same header on every page. -->
+  <header role="banner">
+    <div class="container d-flex items-center justify-between gap-3">
+      <a href="./" style="display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--color-text);font-weight:600;letter-spacing:-.01em">
+        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" style="color:var(--color-primary);flex:none">
+          <!-- TODO: brand icon -->
+          <path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        <span>Site Name</span>
+      </a>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="docs.html">Docs</a></li>
+          <!-- aria-current="page" marks the active page in the nav -->
+          <li><a href="examples.html" aria-current="page">Examples</a></li>
+          <li><a href="https://github.com/rlnorthcutt/ivy" target="_blank" rel="noopener">GitHub</a></li>
+          <li><dark-mode-toggle></dark-mode-toggle></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN — id="content" is the skip-link target -->
+  <main id="content">
+
+    <!-- PAGE TITLE — kicker + h1 + lede -->
+    <section class="page-title container" aria-labelledby="page-title">
+      <p class="kicker">Showcase</p>
+      <h1 id="page-title">Examples</h1>
+      <p class="lede">A gallery of examples and demos. Click through to explore each one.</p>
+    </section>
+
+    <!-- EXAMPLES GRID — responsive 3-column grid of cards.
+         sm-col-3 = 3 columns from the sm breakpoint up (Lattice). -->
+    <section class="container" aria-label="Examples list">
+      <div class="grid sm-col-3 gap-3">
+
+        <!-- Each example is a .card with header, body, and a footer link -->
+        <article class="card">
+          <header><h2>Example one</h2></header>
+          <p>Short description of what this example demonstrates.</p>
+          <footer><a href="example-one.html">View example &rarr;</a></footer>
+        </article>
+
+        <article class="card">
+          <header><h2>Example two</h2></header>
+          <p>Short description of what this example demonstrates.</p>
+          <footer><a href="example-two.html">View example &rarr;</a></footer>
+        </article>
+
+        <article class="card">
+          <header><h2>Example three</h2></header>
+          <p>Short description of what this example demonstrates.</p>
+          <footer><a href="example-three.html">View example &rarr;</a></footer>
+        </article>
+
+        <article class="card">
+          <header><h2>Example four</h2></header>
+          <p>Short description of what this example demonstrates.</p>
+          <footer><a href="example-four.html">View example &rarr;</a></footer>
+        </article>
+
+        <article class="card">
+          <header><h2>Example five</h2></header>
+          <p>Short description of what this example demonstrates.</p>
+          <footer><a href="example-five.html">View example &rarr;</a></footer>
+        </article>
+
+        <article class="card">
+          <header><h2>Example six</h2></header>
+          <p>Short description of what this example demonstrates.</p>
+          <footer><a href="example-six.html">View example &rarr;</a></footer>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER — site-wide footer. See partial-footer.html for a reusable fragment. -->
+  <footer class="container">
+    <p>&copy; <span id="year">2025</span> Site Name. Built with <a href="https://github.com/rlnorthcutt/ivy" target="_blank" rel="noopener">Ivy</a> + <a href="https://github.com/rlnorthcutt/lattice" target="_blank" rel="noopener">Lattice</a>.</p>
+  </footer>
+
+  <!--
+    DARK-MODE-TOGGLE COMPONENT — loaded at the end of <body>.
+    This is a locally vendored copy of the component from
+    https://github.com/rlnorthcutt/dark-mode-toggle (see its dist/ folder).
+    It can also be fetched directly from that repo's dist.
+  -->
+  <script src="dark-mode-toggle.min.js" defer></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

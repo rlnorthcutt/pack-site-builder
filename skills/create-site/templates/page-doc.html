@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docs — Site Name</title>
+  <meta name="description" content="Documentation and reference for Site Name.">
+
+  <!--
+    PREPAINT SCRIPT — MUST come BEFORE the CSS links.
+    Reads the persisted theme (localStorage key "dm:theme") and sets
+    data-theme="dark" on <html> before any paint, preventing a flash of the
+    wrong theme on load. Do not move this below the <link> tags.
+  -->
+  <script>
+  (() => {
+    const KEY = 'dm:theme';
+    const root = document.documentElement;
+    const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+    let mode;
+    try { mode = localStorage.getItem(KEY); } catch {}
+    if (!mode) mode = (root.getAttribute('data-theme')==='dark'||root.classList.contains('dark'))?'dark':null;
+    if (!mode) mode = prefersDark ? 'dark' : 'light';
+    root.style.colorScheme = mode;
+    if (mode === 'dark') root.setAttribute('data-theme','dark');
+  })();
+  </script>
+
+  <!-- Ivy (classless baseline) — load first -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rlnorthcutt/ivy/dist/ivy.full.min.css">
+  <!-- Lattice (12-col layout utilities) — load second -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rlnorthcutt/lattice/dist/lattice.full.min.css">
+  <!-- Your theme — unlayered, loaded last so it wins over the libraries -->
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body class="lattice">
+
+  <!-- SKIP LINK — first element in body -->
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <!-- STICKY HEADER — role="banner". Same header on every page. -->
+  <header role="banner">
+    <div class="container d-flex items-center justify-between gap-3">
+      <a href="./" style="display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--color-text);font-weight:600;letter-spacing:-.01em">
+        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" style="color:var(--color-primary);flex:none">
+          <!-- TODO: brand icon -->
+          <path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        <span>Site Name</span>
+      </a>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <!-- aria-current="page" marks the active page in the nav -->
+          <li><a href="docs.html" aria-current="page">Docs</a></li>
+          <li><a href="https://github.com/rlnorthcutt/ivy" target="_blank" rel="noopener">GitHub</a></li>
+          <li><dark-mode-toggle></dark-mode-toggle></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN — id="content" is the skip-link target -->
+  <main id="content">
+
+    <!-- PAGE TITLE — kicker + h1 + lede (fluid type, see SKILL.md) -->
+    <section class="page-title container" aria-labelledby="page-title">
+      <p class="kicker">Documentation</p>
+      <h1 id="page-title">Docs &amp; Reference</h1>
+      <p class="lede">Everything you need to get up and running with Site Name.</p>
+    </section>
+
+    <!--
+      SIDEBAR LAYOUT — a 12-col grid.
+      aside = 3 cols (lg), article = 9 cols (lg).
+      NOTE: this uses a .grid + aside.span / article.span pattern because
+      Ivy's .shell layout is per-site. Adjust spans/breakpoints as needed.
+    -->
+    <div class="container grid gap-5">
+
+      <!-- "ON THIS PAGE" sticky sidebar nav -->
+      <aside class="span lg-span-3" aria-label="On this page">
+        <nav class="sticky-nav" style="position:sticky;top:5.5rem;">
+          <p class="muted" style="font-weight:600;margin-bottom:.5rem;">On this page</p>
+          <ul>
+            <!-- Each link targets a section id below; keep them in sync -->
+            <li><a href="#getting-started">Getting started</a></li>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#usage">Usage</a></li>
+            <li><a href="#callouts">Callouts</a></li>
+            <li><a href="#code">Code</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- ARTICLE — the main documentation content -->
+      <article class="span lg-span-9">
+
+        <!-- Each section has an id matching a sidebar link.
+             [id]{scroll-margin-top:5.5rem} keeps anchors clear of the header. -->
+        <section id="getting-started" aria-labelledby="getting-started-title">
+          <h2 id="getting-started-title">Getting started</h2>
+          <p>Introductory paragraph explaining what this section covers and who it is for.</p>
+          <p>Add more paragraphs, lists, and links as needed. Ivy styles semantic HTML automatically.</p>
+        </section>
+
+        <section id="installation" aria-labelledby="installation-title">
+          <h2 id="installation-title">Installation</h2>
+          <p>Explain how to install or include the library. Example command:</p>
+          <pre><code>npm install your-package</code></pre>
+        </section>
+
+        <section id="usage" aria-labelledby="usage-title">
+          <h2 id="usage-title">Usage</h2>
+          <p>Show a minimal usage example and explain the key concepts.</p>
+          <pre><code>&lt;script src="dark-mode-toggle.min.js" defer&gt;&lt;/script&gt;
+&lt;dark-mode-toggle&gt;&lt;/dark-mode-toggle&gt;</code></pre>
+        </section>
+
+        <section id="callouts" aria-labelledby="callouts-title">
+          <h2 id="callouts-title">Callouts</h2>
+          <!-- .callout with data-tone for semantic emphasis (Ivy extra) -->
+          <div class="callout" data-tone="info">
+            <p><strong>Tip:</strong> use <code>data-tone="info|success|warn|danger"</code> on callouts.</p>
+          </div>
+          <div class="callout" data-tone="warn">
+            <p><strong>Heads up:</strong> never override applied tokens (like <code>--color-bg</code>) directly — override the <code>-light</code>/<code>-dark</code> variants instead.</p>
+          </div>
+        </section>
+
+        <section id="code" aria-labelledby="code-title">
+          <h2 id="code-title">Code</h2>
+          <p>A longer code block example:</p>
+          <pre><code>function greet(name) {
+  return `Hello, ${name}!`;
+}
+console.log(greet('world'));</code></pre>
+        </section>
+
+      </article>
+    </div>
+
+  </main>
+
+  <!-- FOOTER — site-wide footer. See partial-footer.html for a reusable fragment. -->
+  <footer class="container">
+    <p>&copy; <span id="year">2025</span> Site Name. Built with <a href="https://github.com/rlnorthcutt/ivy" target="_blank" rel="noopener">Ivy</a> + <a href="https://github.com/rlnorthcutt/lattice" target="_blank" rel="noopener">Lattice</a>.</p>
+  </footer>
+
+  <!--
+    DARK-MODE-TOGGLE COMPONENT — loaded at the end of <body>.
+    This is a locally vendored copy of the component from
+    https://github.com/rlnorthcutt/dark-mode-toggle (see its dist/ folder).
+    It can also be fetched directly from that repo's dist.
+  -->
+  <script src="dark-mode-toggle.min.js" defer></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

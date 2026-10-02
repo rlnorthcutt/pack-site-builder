@@ -1,0 +1,116 @@
+/* ============================================================================
+   theme.css — Site theme for Ivy + Lattice
+   ============================================================================
+   HOW THEMING WORKS (two-tier token system)
+   -----------------------------------------
+   Ivy uses TWO tiers of CSS custom properties:
+
+   1. VARIANT tokens  --color-X-light / --color-X-dark
+      These are the SOURCE values for each color in each palette.
+
+   2. APPLIED tokens  --color-bg, --color-text, --color-muted, --color-link,
+      --color-primary, --color-primary-text, --color-secondary,
+      --color-secondary-text, --color-border, --color-surface, --surface-2,
+      --surface-3, --shadow-sm, --shadow-md
+      These are REMAPPED by theme state (light/dark) to the matching variant.
+
+   THE CARDINAL RULE
+   -----------------
+   Override the -light / -dark VARIANT tokens on :root — NEVER the applied
+   tokens directly. The <dark-mode-toggle> component (and the prepaint script)
+   overwrite the applied tokens when dark mode activates, so any direct
+   override of --color-bg / --color-text / etc. will be clobbered and will
+   break dark mode.
+
+   This file is PLAIN UNLAYERED CSS loaded AFTER the libraries. Ivy's layers
+   are `@layer ivy-base, ivy-extra;` — unlayered CSS wins over layered CSS
+   WITHOUT needing !important.
+
+   Load order in your HTML:
+     1. ivy.full.min.css
+     2. lattice.full.min.css
+     3. theme.css  (this file)
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------------
+     LIGHT palette — override the -light variant tokens.
+     Fill in every TODO with your brand colors. Use color-mix(in oklab, ...)
+     for derived tints so the palette stays cohesive.
+     ---------------------------------------------------------------------- */
+  --color-primary-light:        /* TODO: primary brand color */ #1e6f47;
+  --color-primary-text-light:   /* TODO: text on primary */ #ffffff;
+  --color-secondary-light:      /* TODO: secondary brand color */ #3f4a54;
+  --color-secondary-text-light: /* TODO: text on secondary */ #ffffff;
+  --color-link-light:           /* TODO: link color */ #1a5f43;
+  --color-muted-light:          /* TODO: muted text */ #5b6a63;
+  --color-border-light:         /* TODO: border color */ #dde5e0;
+  --color-surface-light:        /* TODO: card/surface bg */ #ffffff;
+  --surface-2-light:            /* TODO: raised surface */ #f1f5f2;
+  --surface-3-light:            /* TODO: raised surface 3 */ #e9efeb;
+  /* Optional: override the page background/text (defaults are fine usually) */
+  --color-bg-light:             /* TODO: page background */ #f8faf8;
+  --color-text-light:           /* TODO: body text */ #141a17;
+
+  /* ------------------------------------------------------------------------
+     DARK palette — override the -dark variant tokens.
+     ---------------------------------------------------------------------- */
+  --color-primary-dark:         /* TODO: primary brand color (dark) */ #5fd39b;
+  --color-primary-text-dark:    /* TODO: text on primary (dark) */ #04231a;
+  --color-secondary-dark:       /* TODO: secondary brand color (dark) */ #a9b7c1;
+  --color-secondary-text-dark:  /* TODO: text on secondary (dark) */ #101418;
+  --color-link-dark:            /* TODO: link color (dark) */ #79dcae;
+  --color-muted-dark:           /* TODO: muted text (dark) */ #9aa9a3;
+  --color-border-dark:          /* TODO: border color (dark) */ #232b27;
+  --color-surface-dark:         /* TODO: card/surface bg (dark) */ #121815;
+  --surface-2-dark:             /* TODO: raised surface (dark) */ #161d1a;
+  --surface-3-dark:             /* TODO: raised surface 3 (dark) */ #1c2521;
+  --color-bg-dark:              /* TODO: page background (dark) */ #0b100e;
+  --color-text-dark:            /* TODO: body text (dark) */ #e6ecea;
+
+  /* ------------------------------------------------------------------------
+     Semantic status colors (single value, used in both palettes).
+     ---------------------------------------------------------------------- */
+  --info:    /* TODO: info */ #60a5fa;
+  --success: /* TODO: success */ #22c55e;
+  --warn:    /* TODO: warning */ #f59e0b;
+  --danger:  /* TODO: danger */ #ef4444;
+
+  /* ------------------------------------------------------------------------
+     Optional TYPE / RHYTHM overrides.
+     Spacing derives from --m. --fs-sm is the small text size.
+     ---------------------------------------------------------------------- */
+  /* --font-sans: "YourFont", var(--font-sans); */
+  /* --font-mono: "YourMono", var(--font-mono); */
+  /* --base-size: 16px; */
+  /* --lh: 1.6; */
+  /* --measure: 64rem; */
+  /* --radius: .375rem; */
+  /* --m: 1rem; */
+  /* --fs-sm: .875rem; */
+}
+
+/* --------------------------------------------------------------------------
+   Optional LATTICE tokens (uncomment to customize layout defaults).
+   ------------------------------------------------------------------------ */
+/* :root {
+  --lat-container-width: 72rem;
+  --lat-space: 1rem;
+  --lat-gap-x: 1rem;
+  --lat-gap-y: 1rem;
+} */
+
+/* --------------------------------------------------------------------------
+   Site-specific CSS (sticky header + anchor offset).
+   Add these if you use the sticky header pattern from the templates.
+   ------------------------------------------------------------------------ */
+/* header[role="banner"] {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in oklab, var(--color-bg) 92%, transparent);
+  backdrop-filter: blur(10px);
+}
+[id] {
+  scroll-margin-top: 5.5rem;
+} */

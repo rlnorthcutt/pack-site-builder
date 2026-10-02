@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SiteTheme Docs</title>
+  <meta name="description" content="Themed documentation and product sites built with Ivy + Lattice and the dark-mode-toggle web component.">
+
+  <!--
+    PREPAINT SCRIPT — MUST come BEFORE the CSS links.
+    Reads the persisted theme (localStorage key "dm:theme") and sets
+    data-theme="dark" on <html> before any paint, preventing a flash of the
+    wrong theme on load. Do not move this below the <link> tags.
+  -->
+  <script>
+  (() => {
+    const KEY = 'dm:theme';
+    const root = document.documentElement;
+    const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+    let mode;
+    try { mode = localStorage.getItem(KEY); } catch {}
+    if (!mode) mode = (root.getAttribute('data-theme')==='dark'||root.classList.contains('dark'))?'dark':null;
+    if (!mode) mode = prefersDark ? 'dark' : 'light';
+    root.style.colorScheme = mode;
+    if (mode === 'dark') root.setAttribute('data-theme','dark');
+  })();
+  </script>
+
+  <!-- Ivy (classless baseline) — load first (vendored local copy) -->
+  <link rel="stylesheet" href="ivy.full.min.css">
+  <!-- Lattice (12-col layout utilities) — load second (vendored local copy) -->
+  <link rel="stylesheet" href="lattice.full.min.css">
+  <!-- Your theme — unlayered, loaded last so it wins over the libraries -->
+  <link rel="stylesheet" href="theme.css">
+</head>
+<!-- class="lattice" enables Lattice layout utilities on this page -->
+<body class="lattice">
+
+  <!-- SKIP LINK — first element in body; lets keyboard users jump past the nav -->
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <!-- STICKY HEADER — role="banner". Brand + nav + dark-mode toggle. -->
+  <header role="banner">
+    <div class="container d-flex items-center justify-between gap-3">
+      <a href="index.html" style="display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--color-text);font-weight:600;letter-spacing:-.01em">
+        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" style="color:var(--color-primary);flex:none">
+          <path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        <span>SiteTheme Docs</span>
+      </a>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="index.html" aria-current="page">Home</a></li>
+          <li><a href="doc.html">Docs</a></li>
+          <li><a href="examples.html">Examples</a></li>
+          <li><a href="https://github.com/rlnorthcutt/ivy" target="_blank" rel="noopener">GitHub</a></li>
+          <li><dark-mode-toggle></dark-mode-toggle></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN — id="content" is the skip-link target -->
+  <main id="content">
+
+    <!-- HERO — kicker + fluid h1 + lede + CTA buttons -->
+    <section class="hero container" aria-labelledby="hero-title">
+      <p class="kicker">Ivy + Lattice + dark-mode-toggle</p>
+      <h1 id="hero-title">Themed docs &amp; product sites, done right</h1>
+      <p class="lede">Scaffold pages from templates, author light/dark CSS-variable themes, and wire in a flash-free dark-mode toggle. This preview runs the arbor palette (forest green / olive / gold) entirely from vendored local files.</p>
+      <div class="btn-group">
+        <a class="btn" data-variant="primary" data-size="lg" href="doc.html">Get started</a>
+        <a class="btn" data-variant="outline" data-size="lg" href="examples.html">See examples</a>
+      </div>
+    </section>
+
+    <!-- FEATURES — responsive 3-column grid of cards -->
+    <section class="container" aria-labelledby="features-title">
+      <h2 id="features-title">Why SiteTheme</h2>
+      <div class="grid sm-col-3 gap-3">
+        <article class="card">
+          <header><h3>Classless baseline</h3></header>
+          <p>Ivy styles semantic HTML automatically — no utility soup for base typography, forms, tables, and code.</p>
+        </article>
+        <article class="card">
+          <header><h3>12-column layout</h3></header>
+          <p>Lattice gives you responsive grids and spacing utilities with clean, predictable breakpoints.</p>
+        </article>
+        <article class="card">
+          <header><h3>Flash-free dark mode</h3></header>
+          <p>The <code>&lt;dark-mode-toggle&gt;</code> component persists your choice and syncs across tabs, with a prepaint script to avoid any flash on load.</p>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER — site-wide footer -->
+  <footer class="container">
+    <p>&copy; <span id="year">2025</span> SiteTheme Docs. Built with <a href="https://github.com/rlnorthcutt/ivy" target="_blank" rel="noopener">Ivy</a> + <a href="https://github.com/rlnorthcutt/lattice" target="_blank" rel="noopener">Lattice</a>.</p>
+  </footer>
+
+  <!--
+    DARK-MODE-TOGGLE COMPONENT — loaded at the end of <body>.
+    Vendored local copy (IIFE build, no ES module export) from
+    https://github.com/rlnorthcutt/dark-mode-toggle — loaded as a plain
+    deferred script.
+  -->
+  <script src="dark-mode-toggle.min.js" defer></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

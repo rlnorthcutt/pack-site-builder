@@ -1,0 +1,38 @@
+<!-- ============================================================================
+     partial-header.html — Reusable site header fragment
+     ============================================================================
+     Paste this into every page, right after the skip link and before <main>.
+     Customize:
+       - The brand SVG (replace the placeholder path with your logo).
+       - The site name text.
+       - The nav links (keep aria-current="page" on the ACTIVE page only).
+       - The GitHub URL.
+     Requirements:
+       - The prepaint script and CSS links must already be in <head>.
+       - <dark-mode-toggle> needs dark-mode-toggle.min.js loaded at end of body.
+       - Sticky behavior needs the site.css rule (see theme-template.css).
+     ========================================================================== -->
+
+<header role="banner">
+  <div class="container d-flex items-center justify-between gap-3">
+    <!-- Brand: SVG placeholder + site name -->
+    <a href="./" style="display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--color-text);font-weight:600;letter-spacing:-.01em">
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" style="color:var(--color-primary);flex:none">
+        <!-- TODO: replace with your brand icon -->
+        <path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+      <span>Site Name</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul>
+        <!-- Set aria-current="page" on the link matching the current page -->
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="docs.html">Docs</a></li>
+        <li><a href="examples.html">Examples</a></li>
+        <li><a href="https://github.com/rlnorthcutt/ivy" target="_blank" rel="noopener">GitHub</a></li>
+        <!-- Dark-mode toggle lives in the nav on every page -->
+        <li><dark-mode-toggle></dark-mode-toggle></li>
+      </ul>
+    </nav>
+  </div>
+</header>

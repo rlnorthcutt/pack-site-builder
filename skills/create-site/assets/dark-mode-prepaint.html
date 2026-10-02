@@ -1,0 +1,25 @@
+<!-- ============================================================================
+     dark-mode-prepaint.html — Prepaint script for <dark-mode-toggle>
+     ============================================================================
+     Copy the block below into the <head> of EVERY page, BEFORE the CSS <link>
+     tags. It reads the persisted theme (localStorage key "dm:theme") and sets
+     data-theme="dark" on <html> before the first paint, preventing a flash of
+     the wrong theme on load.
+
+     Do NOT move it below the <link> tags — it must run before any stylesheet
+     applies so the correct theme is in place for the first paint.
+     ========================================================================== -->
+
+<script>
+(() => {
+  const KEY = 'dm:theme';
+  const root = document.documentElement;
+  const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+  let mode;
+  try { mode = localStorage.getItem(KEY); } catch {}
+  if (!mode) mode = (root.getAttribute('data-theme')==='dark'||root.classList.contains('dark'))?'dark':null;
+  if (!mode) mode = prefersDark ? 'dark' : 'light';
+  root.style.colorScheme = mode;
+  if (mode === 'dark') root.setAttribute('data-theme','dark');
+})();
+</script>

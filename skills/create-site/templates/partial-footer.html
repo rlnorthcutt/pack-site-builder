@@ -1,0 +1,22 @@
+<!-- ============================================================================
+     partial-footer.html — Reusable site footer fragment
+     ============================================================================
+     Paste this into every page, right after </main> and before the
+     dark-mode-toggle script tag. Customize:
+       - The copyright holder / year.
+       - The footer links (docs, GitHub, etc.).
+     Note: the dark-mode-toggle.min.js <script> tag must remain at the very end
+     of <body>, AFTER this footer. Also add the year-update script below
+     somewhere after this footer (order relative to the toggle script doesn't
+     matter), so the copyright year stays current instead of being frozen.
+     ========================================================================== -->
+
+<footer class="container">
+  <p>&copy; <span id="year">2025</span> Site Name. Built with
+    <a href="https://github.com/rlnorthcutt/ivy" target="_blank" rel="noopener">Ivy</a> +
+    <a href="https://github.com/rlnorthcutt/lattice" target="_blank" rel="noopener">Lattice</a>.
+  </p>
+  <!-- TODO: add more footer content — nav links, social, contact, etc. -->
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
